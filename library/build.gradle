@@ -1,0 +1,52 @@
+apply plugin: 'com.android.library'
+
+group = 'com.github.getActivity'
+version = '5.2-SNAPSHOT'
+
+ext {
+    includeDeps = true
+    artifactId = "GsonFactory"
+}
+
+android {
+    compileSdkVersion 26
+
+    defaultConfig {
+        minSdkVersion 11
+        versionCode 52
+        versionName "5.2"
+    }
+}
+
+dependencies {
+    // Json 解析框架：https://github.com/google/gson
+    // noinspection GradleDependency
+    implementation 'com.google.code.gson:gson:2.8.5'
+}
+
+// 防止编码问题
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
