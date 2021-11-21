@@ -21,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void testGson() {
         String str = "{\"hello1\":{\"sex\":\"100\"},\"hello2\":\"\"}";
-        Gson gson = GsonFactory.getSingletonGson();
-        GsonFactory.setNotifyCallback(new INotifyInterface() {
+        Gson gson = SafeGson.getSingletonGson();
+        SafeGson.setNotifyCallback(new INotifyInterface() {
 
             @Override
             public void onSkipParseError(String info) {

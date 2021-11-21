@@ -6,7 +6,7 @@ import com.google.gson.internal.ObjectConstructor;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
-import com.phantom0216.safegson.GsonFactory;
+import com.phantom0216.safegson.SafeGson;
 import com.phantom0216.safegson.INotifyInterface;
 
 import java.io.IOException;
@@ -35,7 +35,7 @@ public class CollectionTypeAdapter<E> extends TypeAdapter<Collection<E>> {
         }
 
         if (jsonToken != JsonToken.BEGIN_ARRAY) {
-            INotifyInterface callback = GsonFactory.getNotifyCallback();
+            INotifyInterface callback = SafeGson.getNotifyCallback();
             if (callback != null) {
                 callback.onSkipParseError(in.toString());
             }

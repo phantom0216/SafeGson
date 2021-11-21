@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public final class GsonFactory {
+public final class SafeGson {
 
     private static final HashMap<Type, InstanceCreator<?>> INSTANCE_CREATORS = new HashMap<>(0);
 
@@ -35,7 +35,7 @@ public final class GsonFactory {
 
     private static volatile Gson sGson;
 
-    private GsonFactory() {}
+    private SafeGson() {}
 
     /**
      * 获取单例的 Gson 对象
@@ -43,7 +43,7 @@ public final class GsonFactory {
     public static Gson getSingletonGson() {
         // 加入双重校验锁
         if(sGson == null) {
-            synchronized (GsonFactory.class) {
+            synchronized (SafeGson.class) {
                 if(sGson == null){
                     sGson = newGsonBuilder().create();
                 }
@@ -67,7 +67,7 @@ public final class GsonFactory {
     }
 
     public static void setNotifyCallback(INotifyInterface notifyCallback) {
-        GsonFactory.notifyCallback = notifyCallback;
+        SafeGson.notifyCallback = notifyCallback;
     }
 
     public static INotifyInterface getNotifyCallback() {

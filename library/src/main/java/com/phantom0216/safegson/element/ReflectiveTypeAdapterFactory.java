@@ -20,7 +20,7 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
-import com.phantom0216.safegson.GsonFactory;
+import com.phantom0216.safegson.SafeGson;
 import com.phantom0216.safegson.INotifyInterface;
 
 import java.io.IOException;
@@ -277,7 +277,7 @@ public final class ReflectiveTypeAdapterFactory implements TypeAdapterFactory {
             }
 
             if (jsonToken != JsonToken.BEGIN_OBJECT) {
-                INotifyInterface callback = GsonFactory.getNotifyCallback();
+                INotifyInterface callback = SafeGson.getNotifyCallback();
                 if (callback != null) {
                     callback.onSkipParseError(in.toString());
                 }
@@ -302,7 +302,7 @@ public final class ReflectiveTypeAdapterFactory implements TypeAdapterFactory {
             } catch (IllegalStateException e) {
                 throw new JsonSyntaxException(e);
             } catch (IllegalAccessException e) {
-                INotifyInterface callback = GsonFactory.getNotifyCallback();
+                INotifyInterface callback = SafeGson.getNotifyCallback();
                 if (callback != null) {
                     callback.onSkipParseError(in.toString());
                 }
